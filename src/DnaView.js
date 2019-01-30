@@ -50,7 +50,7 @@ class DnaView extends Component {
 
 DnaView.propTypes = {
   template: PropTypes.string.isRequired,
-  clickHandler: PropTypes.func,
+  clickHandler: PropTypes.func.isRequired,
 };
 
 export default DnaView;
