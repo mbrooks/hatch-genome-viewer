@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'uuid';
 
 const dnaPairMap = {
   A: 'T',
@@ -18,20 +19,25 @@ const dnaColorMap = {
 class DnaView extends Component {
   render() {
     const { template, clickHandler } = this.props;
-    const dnaStrand = [...template].map((left) => {
+
+    if (template.length < 1) {
+      return null;
+    }
+
+    return [...template].map((left) => {
       const right = dnaPairMap[left];
       return (
-        <div className='dnaGrid'>
-          <div 
-            className='barLeft'
-            style={{ 'background-color': dnaColorMap[left] }}
+        <div className="dnaGrid" key={uuid.v4()}>
+          <div
+            className="barLeft"
+            style={{ backgroundColor: dnaColorMap[left] }}
             onClick={() => clickHandler(`Clicked on left: ${left}`)}
           >
             {left}
           </div>
-          <div 
-            className='barRight' 
-            style={{ 'background-color': dnaColorMap[right] }}
+          <div
+            className="barRight"
+            style={{ backgroundColor: dnaColorMap[right] }}
             onClick={() => clickHandler(`Clicked on right: ${right}`)}
           >
             {right}
@@ -39,18 +45,12 @@ class DnaView extends Component {
         </div>
       );
     });
-
-    return (
-      <p>
-        {dnaStrand}
-      </p>
-    );
   }
 }
 
 DnaView.propTypes = {
   template: PropTypes.string.isRequired,
   clickHandler: PropTypes.func,
-}
+};
 
 export default DnaView;
